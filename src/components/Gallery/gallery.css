@@ -1,0 +1,20 @@
+.imageList {
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+
+.arrow {
+    position: absolute;
+    z-index: 50;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.toLeftBtn {
+    left: 5%;
+}
+
+.toRightBtn {
+    right: 5%;
+}
