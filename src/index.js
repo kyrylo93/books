@@ -1,21 +1,29 @@
 import './styles/normalize.css';
 import './styles/style.css'
 
+import BookItem from "./components/BookItem/BookItem";
+
 if (module.hot) {
 	module.hot.accept()
 }
 
+const book = BookItem('History', 'Jack J', 'Homeless LTD',
+	'Mirror str, 20', '+328038203', "horror");
 
-// Тестовое задание требуется выполнить на чистом javascript
-// 2. Сборку осуществлять с помощью webpack
+
+const list = document.querySelector('.booksList');
+
+
+list.appendChild(book);
+
+
+
+
+
 // 3. Хранение данных реализовать в localstorage или web sql database с
 // возможностью в любой момент переключиться на работу с данными на сервере
 // без глобальных изменений в исходном коде приложения.
-// 4. Рекомендуется продемонстрировать единый стиль обработки данных,
-// 	стилизации. HTML должен быть валидным.
-// 5. Использование сторонних npm пакетов корме devDependencies не
-// желательно
-// 6. Задание должно быть залито в любой публичный git репозиторий.
+
 // 7. Будет плюсом ссылка на приложение, развернутое на каком-нибудь бесплатном
 // хостинге.
 //
