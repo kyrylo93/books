@@ -1,9 +1,6 @@
 import './gallery.css';
 
-const Gallery = (imagesLinks) => {
-	let currIndex = 0;
-	const maxIndex = imagesLinks.length - 1;
-	
+const Gallery = (imageLinks) => {
 	const buttons = [
 		{text: 'To left', className: 'toLeftBtn'},
 		{text: 'To right', className: 'toRightBtn'}
@@ -13,11 +10,11 @@ const Gallery = (imagesLinks) => {
 	imageList.className = 'imageList';
 	
 	const renderImages = () => {
-		imagesLinks.forEach(link => {
+		imageLinks.forEach(link => {
 			const image = document.createElement('img');
-			image.src = link;
+			image.className = 'galleryImage';
 			image.alt = 'gallery image';
-			image.style.margin = '0 auto';
+			image.src = link;
 			
 			const li = document.createElement('li');
 			li.appendChild(image);
@@ -28,33 +25,38 @@ const Gallery = (imagesLinks) => {
 	const renderButtons = () => {
 		buttons.forEach(({text,className}) => {
 			const button = document.createElement('button');
-			button.textContent = text;
 			button.className = `${className} arrow`;
+			button.textContent = text;
 			
 			button.addEventListener('click', () => onButtonCLick(className));
 			imageList.appendChild(button);
 		});
 	};
 	
+	let currentIndex = 0;
+	const maxIndex = imageLinks.length - 1;
+	
 	const onButtonCLick = (className) => {
-		if (className === 'toRightBtn' ) {
-			currIndex = currIndex === maxIndex ? 0 : currIndex + 1;
+		if (className === 'toRightBtn') {
+			currentIndex = currentIndex === maxIndex ? 0 : currentIndex + 1;
 		} else {
-			currIndex = currIndex === 0 ? maxIndex : currIndex - 1;
+			currentIndex = currentIndex === 0 ? maxIndex : currentIndex - 1;
 		}
 		
-		showCurrImage();
+		showCurrentImage();
 	};
 	
-	const showCurrImage = () => {
+	const showCurrentImage = () => {
 		imgList.forEach(el => el.style.display = 'none');
-		imgList[currIndex].style.display = 'block';
+		imgList[currentIndex].style.display = 'block';
 	};
 	
 	renderImages();
-	const imgList = imageList.querySelectorAll('img');
 	renderButtons();
-	showCurrImage();
+	
+	const imgList = imageList.querySelectorAll('img');
+	showCurrentImage();
+	
 	return imageList;
 };
 
