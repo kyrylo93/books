@@ -10,11 +10,11 @@ if (module.hot) {
 const book = BookItem('History', 'Jack J', 'Homeless LTD',
 	'Mirror str, 20', '+328038203', "horror");
 
-
 const list = document.querySelector('.booksList');
 
 
 list.appendChild(book);
+
 
 
 

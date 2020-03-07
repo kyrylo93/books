@@ -1,0 +1,9 @@
+.bookItem {
+    width: 45%;
+    margin: 1%;
+    padding: 1%;
+    right: auto;
+    border: 1px grey solid;
+    border-radius: 10px;
+    text-align: center;
+}

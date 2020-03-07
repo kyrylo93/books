@@ -1,3 +1,5 @@
+import './BookItem.css';
+
 const BookItem = (name, author, publisher, publisherAddress, publisherTel, category) => {
 	const nameParagraph = getNode('Book name:', name);
 	const authorParagraph = getNode('Book author:', author);
@@ -15,6 +17,7 @@ const BookItem = (name, author, publisher, publisherAddress, publisherTel, categ
 	nodeElements.forEach(elem => article.appendChild(elem));
 	
 	const li = document.createElement('li');
+	li.className = 'bookItem';
 	li.appendChild(article);
 	return li;
 };
