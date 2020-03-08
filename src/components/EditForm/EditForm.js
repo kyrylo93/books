@@ -43,11 +43,20 @@ const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText,
 			});
 		
 		//setting new values
-		localStorage.setItem(`book_${index}`, updatedValues);
+		if (index === null) {
+			
+			const newIndex = localStorage.getItem('booksAmount');
+			
+			localStorage.setItem(`book_${newIndex}`, updatedValues);
+			localStorage.setItem('booksAmount', +newIndex + 1);
+			
+		} else {
+			localStorage.setItem(`book_${index}`, updatedValues);
+		}
 		
 		//to refresh paragraphs values
-		deleteOldTextInfoValues();
-		addBookInfoText();
+		deleteOldTextInfoValues && deleteOldTextInfoValues();
+		deleteOldTextInfoValues && addBookInfoText();
 		
 		event.preventDefault();
 		section.addEventListener('transitionend', hideEditForm);

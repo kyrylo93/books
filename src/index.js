@@ -6,23 +6,31 @@ import {transformToJSON, transformFromJSON} from "./utils";
 import EditForm from "./components/EditForm/EditForm";
 
 let currentAmount = 0;
+const list = document.querySelector('.booksList');
 
 const formSection = document.createElement('section');
 formSection.className = 'addNewBookForm';
 
-
 const hideEditForm = () => {
 	form.removeEventListener('transitionend', hideEditForm);
+	currentAmount++;
 	formSection.style.zIndex = -10;
 	form.style.zIndex = -10;
+	
+	const currentIndex = +(localStorage.getItem('booksAmount'));
+	const bookValues = transformFromJSON(localStorage.getItem(`book_${currentIndex - 1}`));
+	
+	if (bookValues) {
+		list.appendChild(BookItem(bookValues, currentIndex - 1));
+	}
 };
 
 const form = EditForm(
 	{},
 	hideEditForm,
-	() => {},
-	() => {},
-	false,
+	null,
+	null,
+	null,
 	'Add a book'
 );
 
@@ -52,7 +60,6 @@ const renderBooks = () => {
 		}
 	}
 	
-	const list = document.querySelector('.booksList');
 	booksHtmlNodes.forEach(book => list.appendChild(book));
 };
 
@@ -73,12 +80,14 @@ const renderAddNewBookForm = () => {
 
 const showBookForm = () => {
 	formSection.style.zIndex = 100;
-	
-	form.style.opacity = 1;
 	form.style.zIndex = 100;
+	form.style.opacity = 1;
 };
 
 addDefaultBooks();
+
+
+
 renderBooks();
 renderAddNewBookButton();
 renderAddNewBookForm();

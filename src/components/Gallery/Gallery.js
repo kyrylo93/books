@@ -1,6 +1,6 @@
 import './gallery.css';
 
-const Gallery = ({imagesLinks}) => {
+const Gallery = ({imagesLinks = ['https://i.picsum.photos/id/347/250/300.jpg']}) => {
 	const buttons = [
 		{text: 'To left', className: 'toLeftBtn'},
 		{text: 'To right', className: 'toRightBtn'}

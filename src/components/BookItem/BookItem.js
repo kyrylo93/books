@@ -5,7 +5,7 @@ import {CustomButton} from "../CustomButton/CustomButton";
 import EditForm from "../EditForm/EditForm";
 
 const BookItem = (props, index) => {
-	
+	// TODO why i need props here, i cann take it from localStorage
 	const article = document.createElement('article');
 	article.className = 'book';
 	
