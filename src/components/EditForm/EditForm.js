@@ -1,42 +1,45 @@
 import './EditForm.css';
-import {transformToJSON} from "../../utils";
 import {CustomButton} from "../CustomButton/CustomButton";
+import {transformToJSON, transformFromJSON} from "../../utils";
 
-const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText, index, buttonText) => {
+const EditForm = (hideEditForm, deleteOldTextInfoValues, addBookInfoText, index, buttonText) => {
 
-	const {name, author, publisher, publisherAddress, publisherTel, category, imagesLinks = []} = props;
 	
-	const nameParagraph = getFormParagraph('Book name:', name, 'Moby Dick');
-	const authorParagraph = getFormParagraph('Book author:', author, 'Christian Bale');
-	const publisherParagraph = getFormParagraph('Publisher:', publisher, 'Book space');
-	const publisherAddressParagraph = getFormParagraph('Publisher address:', publisherAddress, 'Wall street, 81');
-	const publisherTelParagraph = getFormParagraph('Publisher tel:', publisherTel, '+1234567890');
-	const categoryParagraph = getFormParagraph('Book category:', category, 'Science');
+	const getValues = () => {
+		return index === 'new'
+				? {
+					name: '', author: '', publisher: '', publisherAddress: '',
+					publisherTel: '', category: '', imagesLinks: []
+				  }
+				: transformFromJSON(localStorage.getItem(`book_${index}`));
+	};
+	
+	const {name, author, publisher, publisherAddress, publisherTel, category, imagesLinks} = getValues();
+	
+	const [nameParagraph, nameInput] = getFormParagraph('Book name:', name, 'Moby Dick');
+	const [authorParagraph, authorInput] = getFormParagraph('Book author:', author, 'Christian Bale');
+	const [publisherParagraph, publisherInput] = getFormParagraph('Publisher:', publisher, 'Book space');
+	const [publisherAddressParagraph, publisherAddressInput] = getFormParagraph('Publisher address:', publisherAddress, 'Wall street, 81');
+	const [publisherTelParagraph, publisherTelInput] = getFormParagraph('Publisher tel:', publisherTel, '+1234567890');
+	const [categoryParagraph, categoryInput] = getFormParagraph('Book category:', category, 'Science');
 	
 	let imagesLinksNode = [];
 	
 	if (index !== 'new') {
 		imagesLinks.forEach((link, index) => {
-			imagesLinksNode.push(getFormParagraph(`Link number ${index + 1}`, link,null ,`link${index + 1}`));
+			const [paragraph] = getFormParagraph(`Link number ${index + 1}`, link,null ,`link${index + 1}`);
+			imagesLinksNode.push(paragraph);
 		});
 	} else {
 		for (let index = 0; index < 3; index++) {
-			imagesLinksNode.push(getFormParagraph(`Link number ${index + 1}`, '','Your link' ,`link${index + 1}`));
+			const [paragraph] = getFormParagraph(`Link number ${index + 1}`, '','Your link' ,`link${index + 1}`);
+			imagesLinksNode.push(paragraph);
 		}
 	}
 	
 	const form = document.createElement('form');
 	const section = document.createElement('section');
 	section.className = 'editForm';
-	
-	// moved it here to improve performance
-	//TODO return from getFormParagraph: paragraph and link to input
-	const nameInput = nameParagraph.querySelector('input');
-	const authorInput = authorParagraph.querySelector('input');
-	const publisherInput = publisherParagraph.querySelector('input');
-	const publisherAddressInput = publisherAddressParagraph.querySelector('input');
-	const publisherTelInput = publisherTelParagraph.querySelector('input');
-	const categoryInput = categoryParagraph.querySelector('input');
 	
 	const onConfirmClick = event => {
 		const nameValues = nameInput.value;
@@ -45,8 +48,6 @@ const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText,
 		const publisherAddressValue = publisherAddressInput.value;
 		const publisherTelValue = publisherTelInput.value;
 		const categoryValue = categoryInput.value;
-		
-		// TODO обновлять галерею
 		
 		//just 3 elements
 		const imageInput1 = form.querySelector('.link1')?.querySelector('input')?.value;
@@ -65,11 +66,9 @@ const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText,
 		
 		//setting new values
 		if (index === 'new') {
-			
 			const newIndex = localStorage.getItem('booksAmount');
 			localStorage.setItem(`book_${newIndex}`, updatedValues);
 			localStorage.setItem('booksAmount', +newIndex + 1);
-			
 		} else {
 			localStorage.setItem(`book_${index}`, updatedValues);
 		}
@@ -85,7 +84,6 @@ const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText,
 	
 	const confirmButton = CustomButton(buttonText, onConfirmClick);
 	
-	// TODO: move this code to utils
 	const nodeElements = [
 		nameParagraph, authorParagraph, publisherParagraph, publisherAddressParagraph,
 		publisherTelParagraph, categoryParagraph
@@ -111,7 +109,7 @@ export const getFormParagraph = (text, value, placeholder, className) => {
 	label.appendChild(input);
 	paragraph.appendChild(label);
 	
-	return paragraph;
+	return [paragraph, input];
 };
 
 export default EditForm;

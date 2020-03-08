@@ -2,7 +2,6 @@ import './gallery.css';
 import {transformFromJSON} from "../../utils";
 
 const Gallery = (index) => {
-	
 	const {imagesLinks} = transformFromJSON(localStorage.getItem(`book_${index}`));
 	
 	const buttons = [
@@ -46,7 +45,6 @@ const Gallery = (index) => {
 		} else {
 			currentIndex = currentIndex === 0 ? maxIndex : currentIndex - 1;
 		}
-		
 		showCurrentImage();
 	};
 	
@@ -55,9 +53,11 @@ const Gallery = (index) => {
 		imgList[currentIndex].style.display = 'block';
 	};
 	
-	// TODO if 1 image => don't render buttons
 	renderImages();
-	renderButtons();
+	
+	if (maxIndex !== 0) {
+		renderButtons();
+	}
 	
 	const imgList = imageList.querySelectorAll('img');
 	showCurrentImage();

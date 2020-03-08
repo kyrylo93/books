@@ -2,12 +2,11 @@ import './styles/normalize.css';
 import './styles/style.css'
 import {defaultBooks} from "./defaultBooks";
 import BookItem from "./components/BookItem/BookItem";
-import {transformToJSON, transformFromJSON} from "./utils";
 import EditForm from "./components/EditForm/EditForm";
+import {transformToJSON, transformFromJSON} from "./utils";
 
 let currentAmount = 0;
 const list = document.querySelector('.booksList');
-
 const formSection = document.createElement('section');
 formSection.className = 'addNewBookForm';
 
@@ -21,18 +20,11 @@ const hideEditForm = () => {
 	const bookValues = transformFromJSON(localStorage.getItem(`book_${currentIndex - 1}`));
 	
 	if (bookValues) {
-		list.appendChild(BookItem(bookValues, currentIndex - 1));
+		list.appendChild(BookItem(currentIndex - 1));
 	}
 };
 
-const form = EditForm(
-	{},
-	hideEditForm,
-	null,
-	null,
-	'new',
-	'Add a book'
-);
+const form = EditForm(hideEditForm, null, null, 'new', 'Add a book');
 
 const addDefaultBooks = () => {
 	const amountFromStorage = localStorage.getItem('booksAmount');
@@ -56,7 +48,7 @@ const renderBooks = () => {
 		const bookValues = transformFromJSON(localStorage.getItem(`book_${index}`));
 		
 		if (bookValues) {
-			booksHtmlNodes.push(BookItem(bookValues, index));
+			booksHtmlNodes.push(BookItem(index));
 		}
 	}
 	
@@ -85,9 +77,6 @@ const showBookForm = () => {
 };
 
 addDefaultBooks();
-
-
-
 renderBooks();
 renderAddNewBookButton();
 renderAddNewBookForm();

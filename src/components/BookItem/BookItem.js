@@ -1,11 +1,10 @@
 import './BookItem.css';
 import Gallery from "../Gallery/Gallery";
-import {getTextNode, transformFromJSON} from "../../utils";
-import {CustomButton} from "../CustomButton/CustomButton";
 import EditForm from "../EditForm/EditForm";
+import {CustomButton} from "../CustomButton/CustomButton";
+import {getTextNode, transformFromJSON} from "../../utils";
 
-const BookItem = (props, index) => {
-	// TODO why i need props here, i can take it from localStorage
+const BookItem = (index) => {
 	const article = document.createElement('article');
 	article.className = 'book';
 	
@@ -19,6 +18,7 @@ const BookItem = (props, index) => {
 		li.remove();
 		localStorage.removeItem(`book_${index}`);
 	};
+	
 	const deleteButton = CustomButton('Remove from list', deleteArticle);
 	
 	const showEditForm = () => {
@@ -32,10 +32,7 @@ const BookItem = (props, index) => {
 	};
 	
 	const deleteOldTextInfoValues = () => textBlock.innerHTML = '';
-	
-	const deleteOldImages = () => {
-		article.querySelector('.imageList').remove();
-	};
+	const deleteOldImages = () => article.querySelector('.imageList').remove();
 	
 	const clearBookCard = () => {
 		deleteOldTextInfoValues();
@@ -72,15 +69,13 @@ const BookItem = (props, index) => {
 	};
 	
 	article.appendChild(textBlock);
-	const editForm = EditForm(props, hideEditForm, clearBookCard, addTextAndImage, index, 'Confirm changes');
+	const editForm = EditForm(hideEditForm, clearBookCard, addTextAndImage, index, 'Confirm changes');
 	const editButton = CustomButton('Edit book', showEditForm);
 	const nodeElements = [deleteButton, editButton, editForm];
 	nodeElements.forEach(elem => article.appendChild(elem));
 	
 	addTextAndImage();
-	
 	li.appendChild(article);
-	
 	return li;
 };
 
