@@ -18,3 +18,15 @@
     margin: 2% 5%;
     box-sizing: border-box;
 }
+
+.filterField {
+    width: 50%;
+    padding: 2% 5%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.filterField input {
+    width: 100%;
+    margin: 1%;
+}

@@ -11,6 +11,9 @@ const BookItem = (index) => {
 	const li = document.createElement('li');
 	li.className = 'bookItem';
 	
+	const book = transformFromJSON(localStorage.getItem(`book_${index}`));
+	li.dataset.bookName = book.name;
+	
 	const textBlock = document.createElement('section');
 	textBlock.className = 'infoBlock';
 	

@@ -4,8 +4,10 @@ import {defaultBooks} from "./defaultBooks";
 import BookItem from "./components/BookItem/BookItem";
 import EditForm from "./components/EditForm/EditForm";
 import {transformToJSON, transformFromJSON} from "./utils";
+import {getFormParagraph} from "./components/EditForm/EditForm";
 
 let currentAmount = 0;
+const header = document.querySelector('header');
 const list = document.querySelector('.booksList');
 const formSection = document.createElement('section');
 formSection.className = 'addNewBookForm';
@@ -61,7 +63,6 @@ const renderAddNewBookButton = () => {
 	button.textContent = 'Add new book';
 	button.addEventListener('click', showBookForm);
 	
-	const header = document.querySelector('header');
 	header.appendChild(button);
 };
 
@@ -76,10 +77,32 @@ const showBookForm = () => {
 	form.style.opacity = 1;
 };
 
+const onFilterChange = (event) => {
+	const value = event.target.value;
+	const splittedValue = value.split('');
+	const bookCards = [...document.querySelectorAll('.bookItem')];
+	
+	if (value === '') {
+		bookCards.forEach(card => card.style.display = 'block');
+	} else {
+		bookCards.forEach(card => {
+			const name = card.dataset.bookName.split('');
+			
+			splittedValue.forEach((symbol, index) => {
+				const matched = symbol === name[index];
+				card.style.display = matched ? 'block' : 'none';
+			});
+		});
+	}
+};
+
+const renderFilterInput = () => {
+	const [paragraph] = getFormParagraph('Filter:', '', 'The Big Bang Theory', 'filterField', onFilterChange);
+	header.appendChild(paragraph);
+};
+
 addDefaultBooks();
 renderBooks();
 renderAddNewBookButton();
 renderAddNewBookForm();
-
-// 	Всего две страницы:
-// 	1 - Список книг с возможностью отфильтровать по названию
+renderFilterInput();

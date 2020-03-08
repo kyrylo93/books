@@ -96,7 +96,7 @@ const EditForm = (hideEditForm, deleteOldTextInfoValues, addBookInfoText, index,
 	return section;
 };
 
-export const getFormParagraph = (text, value, placeholder, className) => {
+export const getFormParagraph = (text, value, placeholder, className, onChange = () => {}) => {
 	const paragraph = document.createElement('p');
 	const label = document.createElement('label');
 	const input = document.createElement('input');
@@ -105,6 +105,8 @@ export const getFormParagraph = (text, value, placeholder, className) => {
 	label.textContent = text;
 	input.value = value || '';
 	input.placeholder = placeholder || '';
+	
+	input.addEventListener('keyup', onChange);
 	
 	label.appendChild(input);
 	paragraph.appendChild(label);
