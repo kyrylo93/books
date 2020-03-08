@@ -24,14 +24,14 @@ const addDefaultBooks = () => {
 const renderBooks = () => {
 	const booksHtmlNodes = [];
 
-	for (let i = 0; i < currentAmount ; i++) {
-		const book = transformFromJSON(localStorage.getItem(`book_${i}`));
-		booksHtmlNodes.push(BookItem(book, i));
+	for (let index = 0; index < currentAmount ; index++) {
 		
-		console.log(book)
+		const bookValues = transformFromJSON(localStorage.getItem(`book_${index}`));
 		
+		if (bookValues) {
+			booksHtmlNodes.push(BookItem(bookValues, index));
+		}
 	}
-	
 	
 	const list = document.querySelector('.booksList');
 	booksHtmlNodes.forEach(book => list.appendChild(book));
@@ -40,8 +40,6 @@ const renderBooks = () => {
 addDefaultBooks();
 renderBooks();
 
-// 	Для одной книги указывать разное количество фото, и сделать возможность
-// просматривать эти фото.
 // 	Всего две страницы:
-// 	1 - Список книг с возможностью удалить или отфильтровать по названию
-// 2 - Страница добавления новой / редактирование
+// 	1 - Список книг с возможностью отфильтровать по названию
+// 2 - Страница добавления новой

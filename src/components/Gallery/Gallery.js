@@ -51,6 +51,7 @@ const Gallery = ({imagesLinks}) => {
 		imgList[currentIndex].style.display = 'block';
 	};
 	
+	// TODO if 1 image => don't render buttons
 	renderImages();
 	renderButtons();
 	

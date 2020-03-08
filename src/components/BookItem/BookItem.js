@@ -15,7 +15,10 @@ const BookItem = (props, index) => {
 	const textBlock = document.createElement('section');
 	textBlock.className = 'infoBlock';
 	
-	const deleteArticle = () => li.remove();
+	const deleteArticle = () => {
+		li.remove();
+		localStorage.removeItem(`book_${index}`);
+	};
 	const deleteButton = CustomButton('Remove from list', deleteArticle);
 	
 	const showEditForm = () => {
