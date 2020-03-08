@@ -1,0 +1,17 @@
+.editForm {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+    background-color: white;
+    opacity: 0;
+    transition: opacity .5s;
+}
+
+.editForm input {
+    width: 90%;
+    margin: 2% 5%;
+    box-sizing: border-box;
+}

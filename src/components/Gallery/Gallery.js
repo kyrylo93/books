@@ -1,6 +1,6 @@
 import './gallery.css';
 
-const Gallery = (imageLinks) => {
+const Gallery = ({imagesLinks}) => {
 	const buttons = [
 		{text: 'To left', className: 'toLeftBtn'},
 		{text: 'To right', className: 'toRightBtn'}
@@ -10,7 +10,7 @@ const Gallery = (imageLinks) => {
 	imageList.className = 'imageList';
 	
 	const renderImages = () => {
-		imageLinks.forEach(link => {
+		imagesLinks.forEach(link => {
 			const image = document.createElement('img');
 			image.className = 'galleryImage';
 			image.alt = 'gallery image';
@@ -34,7 +34,7 @@ const Gallery = (imageLinks) => {
 	};
 	
 	let currentIndex = 0;
-	const maxIndex = imageLinks.length - 1;
+	const maxIndex = imagesLinks.length - 1;
 	
 	const onButtonCLick = (className) => {
 		if (className === 'toRightBtn') {

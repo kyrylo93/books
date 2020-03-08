@@ -1,8 +1,10 @@
 import './BookItem.css';
 import Gallery from "../Gallery/Gallery";
-import {getTextNode, getButtonNode} from "../../utils";
+import {getTextNode, transformFromJSON} from "../../utils";
+import {CustomButton} from "../CustomButton/CustomButton";
+import EditForm from "../EditForm/EditForm";
 
-const BookItem = (name, author, publisher, publisherAddress, publisherTel, category, imagesLinks) => {
+const BookItem = (props, index) => {
 	
 	const article = document.createElement('article');
 	article.className = 'book';
@@ -10,23 +12,53 @@ const BookItem = (name, author, publisher, publisherAddress, publisherTel, categ
 	const li = document.createElement('li');
 	li.className = 'bookItem';
 	
-	const nameParagraph = getTextNode('Book name:', name);
-	const authorParagraph = getTextNode('Book author:', author);
-	const publisherParagraph = getTextNode('Publisher:', publisher);
-	const publisherAddressParagraph = getTextNode('Publisher address:', publisherAddress);
-	const publisherTelParagraph = getTextNode('Publisher tel:', publisherTel);
-	const categoryParagraph = getTextNode('Book category:', category);
-	const gallery = Gallery(imagesLinks);
+	const textBlock = document.createElement('section');
+	textBlock.className = 'infoBlock';
 	
 	const deleteArticle = () => li.remove();
-	const deleteButton = getButtonNode('Remove from list', deleteArticle);
+	const deleteButton = CustomButton('Remove from list', deleteArticle);
 	
-	const nodeElements = [nameParagraph, authorParagraph, publisherParagraph,
-		publisherAddressParagraph, publisherTelParagraph, categoryParagraph, deleteButton, gallery];
+	const showEditForm = () => {
+		editForm.style.zIndex = 100;
+		editForm.style.opacity = 1;
+	};
 	
+	const hideEditForm = () => {
+		editForm.style.zIndex = -10;
+		editForm.removeEventListener('transitionend', hideEditForm);
+	};
+	
+	const deleteOldTextInfoValues = () => textBlock.innerHTML = '';
+	
+	const addBookInfoText = () => {
+		const book = transformFromJSON(localStorage.getItem(`book_${index}`));
+		const {name, author, publisher, publisherAddress, publisherTel, category} = book;
+		
+		const nameParagraph = getTextNode('Book name:', name);
+		const authorParagraph = getTextNode('Book author:', author);
+		const publisherParagraph = getTextNode('Publisher:', publisher);
+		const publisherAddressParagraph = getTextNode('Publisher address:', publisherAddress);
+		const publisherTelParagraph = getTextNode('Publisher tel:', publisherTel);
+		const categoryParagraph = getTextNode('Book category:', category);
+		
+		const paragraphElements = [
+			nameParagraph, authorParagraph, publisherParagraph,
+			publisherAddressParagraph, publisherTelParagraph, categoryParagraph,
+		];
+		
+		paragraphElements.forEach(paragraph => textBlock.appendChild(paragraph));
+		
+	};
+	
+	addBookInfoText();
+	article.appendChild(textBlock);
+	const gallery = Gallery(props);
+	const editForm = EditForm(props, hideEditForm, deleteOldTextInfoValues, addBookInfoText, index);
+	const editButton = CustomButton('Edit book', showEditForm);
+	const nodeElements = [deleteButton, editButton, gallery, editForm];
 	nodeElements.forEach(elem => article.appendChild(elem));
-	
 	li.appendChild(article);
+	
 	return li;
 };
 

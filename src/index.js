@@ -1,39 +1,47 @@
 import './styles/normalize.css';
 import './styles/style.css'
-
+import {defaultBooks} from "./defaultBooks";
 import BookItem from "./components/BookItem/BookItem";
+import {transformToJSON, transformFromJSON} from "./utils";
 
-const imagesLinks = [
-	'https://i.picsum.photos/id/347/250/300.jpg',
-	'https://i.picsum.photos/id/348/250/300.jpg',
-	'https://i.picsum.photos/id/349/250/300.jpg'
-];
+let currentAmount = 0;
 
-const book = BookItem('History', 'Jack J', 'Homeless LTD',
-	'Mirror str, 20', '+328038203', "horror", imagesLinks);
+const addDefaultBooks = () => {
+	const amountFromStorage = localStorage.getItem('booksAmount');
+	
+	if (amountFromStorage > 0) {
+		currentAmount = amountFromStorage;
+	} else {
+		localStorage.setItem('booksAmount', 0);
+		defaultBooks.forEach(book => {
+			localStorage.setItem(`book_${currentAmount}`, transformToJSON(book));
+			currentAmount++;
+			localStorage.setItem('booksAmount', currentAmount);
+		})
+	}
+};
 
-const list = document.querySelector('.booksList');
+const renderBooks = () => {
+	const booksHtmlNodes = [];
 
+	for (let i = 0; i < currentAmount ; i++) {
+		const book = transformFromJSON(localStorage.getItem(`book_${i}`));
+		booksHtmlNodes.push(BookItem(book, i));
+		
+		console.log(book)
+		
+	}
+	
+	
+	const list = document.querySelector('.booksList');
+	booksHtmlNodes.forEach(book => list.appendChild(book));
+};
 
-list.appendChild(book);
+addDefaultBooks();
+renderBooks();
 
-// 3. Хранение данных реализовать в localstorage или web sql database с
-// возможностью в любой момент переключиться на работу с данными на сервере
-// без глобальных изменений в исходном коде приложения.
-
-// 7. Будет плюсом ссылка на приложение, развернутое на каком-нибудь бесплатном
-// хостинге.
-//
 // 	Для одной книги указывать разное количество фото, и сделать возможность
 // просматривать эти фото.
 // 	Всего две страницы:
 // 	1 - Список книг с возможностью удалить или отфильтровать по названию
 // 2 - Страница добавления новой / редактирование
-
-
-// dynamic import
-// button.addEventListener('click', () => {
-// 	import( "./chat").then(chat => {
-// 		chat.init()
-// 	})
-// });

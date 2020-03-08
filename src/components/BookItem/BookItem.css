@@ -1,4 +1,5 @@
 .bookItem {
+    position: relative;
     width: 45%;
     margin: 1%;
     padding: 1%;
@@ -6,6 +7,7 @@
     border: 1px #808080 solid;
     border-radius: 10px;
     text-align: center;
+    overflow: hidden;
 }
 
 .customButton {

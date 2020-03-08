@@ -4,11 +4,5 @@ export const getTextNode = (description, text) => {
 	return el;
 };
 
-export const getButtonNode = (text, onClick) => {
-	const el = document.createElement('button');
-	el.className = 'customButton';
-	el.textContent = text;
-	
-	el.addEventListener('click', onClick);
-	return el;
-};
+export const transformToJSON = obj => JSON.stringify(obj);
+export const transformFromJSON = obj => JSON.parse(obj);
