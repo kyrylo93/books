@@ -56,7 +56,7 @@ const BookItem = (props, index) => {
 	addBookInfoText();
 	article.appendChild(textBlock);
 	const gallery = Gallery(props);
-	const editForm = EditForm(props, hideEditForm, deleteOldTextInfoValues, addBookInfoText, index);
+	const editForm = EditForm(props, hideEditForm, deleteOldTextInfoValues, addBookInfoText, index, 'Confirm changes');
 	const editButton = CustomButton('Edit book', showEditForm);
 	const nodeElements = [deleteButton, editButton, gallery, editForm];
 	nodeElements.forEach(elem => article.appendChild(elem));

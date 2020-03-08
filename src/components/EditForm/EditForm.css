@@ -5,7 +5,8 @@
     top: 0;
     left: 0;
     z-index: -10;
-    background-color: white;
+    background-color: #fff4e0;
+
     opacity: 0;
     transition: opacity .5s;
 }

@@ -2,9 +2,9 @@ import './EditForm.css';
 import {CustomButton} from "../CustomButton/CustomButton";
 import {transformToJSON} from "../../utils";
 
-const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText, index) => {
+const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText, index, buttonText) => {
 	
-	// TODO : do i need imagesLinks here?
+	// TODO : do i need imagesLinks here? - yes you need it
 	const {name, author, publisher, publisherAddress, publisherTel, category, imagesLinks} = props;
 	
 	const nameParagraph = getFormParagraph('Book name:', name, 'Moby Dick');
@@ -19,7 +19,7 @@ const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText,
 	section.className = 'editForm';
 	
 	// moved it here to improve performance
-	//TODO return from getFormParagraph paragraph and link to input
+	//TODO return from getFormParagraph: paragraph and link to input
 	const nameInput = nameParagraph.querySelector('input');
 	const authorInput = authorParagraph.querySelector('input');
 	const publisherInput = publisherParagraph.querySelector('input');
@@ -54,7 +54,7 @@ const EditForm = (props, hideEditForm, deleteOldTextInfoValues, addBookInfoText,
 		section.style.opacity = 0;
 	};
 	
-	const confirmButton = CustomButton('Confirm changes', onConfirmClick);
+	const confirmButton = CustomButton(buttonText, onConfirmClick);
 	
 	// TODO: move this code to utils
 	const nodeElements = [
