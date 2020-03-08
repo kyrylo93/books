@@ -1,6 +1,10 @@
 import './gallery.css';
+import {transformFromJSON} from "../../utils";
 
-const Gallery = ({imagesLinks = ['https://i.picsum.photos/id/347/250/300.jpg']}) => {
+const Gallery = (index) => {
+	
+	const {imagesLinks} = transformFromJSON(localStorage.getItem(`book_${index}`));
+	
 	const buttons = [
 		{text: 'To left', className: 'toLeftBtn'},
 		{text: 'To right', className: 'toRightBtn'}

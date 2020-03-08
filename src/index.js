@@ -30,7 +30,7 @@ const form = EditForm(
 	hideEditForm,
 	null,
 	null,
-	null,
+	'new',
 	'Add a book'
 );
 
