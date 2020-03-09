@@ -89,7 +89,7 @@ const onFilterChange = (event) => {
 			const name = card.dataset.bookName.split('');
 			
 			splittedValue.forEach((symbol, index) => {
-				const matched = symbol === name[index];
+				const matched = symbol.toLowerCase() === name[index].toLowerCase();
 				card.style.display = matched ? 'block' : 'none';
 			});
 		});
